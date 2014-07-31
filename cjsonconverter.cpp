@@ -1,27 +1,27 @@
 #include <string.h>
 #include "frozen.h"
-#include "cjsonparser.h"
+#include "cjsonconverter.h"
 
-CJsonParser::CJsonParser(void)
+CJsonConverter::CJsonConverter(void)
 {
     out_buf = 0;
     out_len = 0;
     out_buf_size = 0;
 }
 
-CJsonParser::~CJsonParser()
+CJsonConverter::~CJsonConverter()
 {
 
 }
 
-void CJsonParser::setBuf(char* buf, unsigned short buf_size)
+void CJsonConverter::setBuf(char* buf, unsigned short buf_size)
 {
     out_buf = buf;
     out_len = 0;
     out_buf_size = buf_size;
 }
 
-unsigned short CJsonParser::packStruct1(TTEST_STRUCT_1* data)
+unsigned short CJsonConverter::packStruct(TTEST_STRUCT_1* data)
 {
     if (!out_buf)
         return 0;
@@ -38,7 +38,7 @@ unsigned short CJsonParser::packStruct1(TTEST_STRUCT_1* data)
     return putBuf(jstr);
 }
 
-unsigned short CJsonParser::packStruct1(char* buf, unsigned short buf_size, TTEST_STRUCT_1* data)
+unsigned short CJsonConverter::packStruct(char* buf, unsigned short buf_size, TTEST_STRUCT_1* data)
 {
     if (!buf)
         return 0;
@@ -54,7 +54,7 @@ unsigned short CJsonParser::packStruct1(char* buf, unsigned short buf_size, TTES
     return i;
 }
 
-unsigned short CJsonParser::packStruct2(TTEST_STRUCT_2* data)
+unsigned short CJsonConverter::packStruct(TTEST_STRUCT_2* data)
 {
     if (!out_buf)
         return 0;
@@ -75,7 +75,7 @@ unsigned short CJsonParser::packStruct2(TTEST_STRUCT_2* data)
     return putBuf(jstr);
 }
 
-unsigned short CJsonParser::packStruct3(TTEST_STRUCT_3* data)
+unsigned short CJsonConverter::packStruct(TTEST_STRUCT_3* data)
 {
     if (!out_buf)
         return 0;
@@ -92,7 +92,7 @@ unsigned short CJsonParser::packStruct3(TTEST_STRUCT_3* data)
     return putBuf(jstr);
 }
 
-unsigned short CJsonParser::packStruct4(TTEST_STRUCT_4* data)
+unsigned short CJsonConverter::packStruct(TTEST_STRUCT_4* data)
 {
     if (!out_buf)
         return 0;
@@ -109,7 +109,7 @@ unsigned short CJsonParser::packStruct4(TTEST_STRUCT_4* data)
     return putBuf(jstr);
 }
 
-unsigned short CJsonParser::packStruct5(TTEST_STRUCT_5* data)
+unsigned short CJsonConverter::packStruct(TTEST_STRUCT_5* data)
 {
     if (!out_buf)
         return 0;
@@ -125,7 +125,7 @@ unsigned short CJsonParser::packStruct5(TTEST_STRUCT_5* data)
     i += json_emit_raw_str      (&jstr[i], sizeof(jstr) - i, "[");
     for (int j = 0; j < data->p2.size(); j++)
     {
-        i += packStruct1(&jstr[i], sizeof(jstr) - i, &data->p2.at(j));
+        i += packStruct(&jstr[i], sizeof(jstr) - i, &data->p2.at(j));
         i += json_emit_raw_str	(&jstr[i], sizeof(jstr) - i, ",");
     }
     if (data->p2.size())
@@ -136,7 +136,7 @@ unsigned short CJsonParser::packStruct5(TTEST_STRUCT_5* data)
     return putBuf(jstr);
 }
 
-unsigned short CJsonParser::putBuf(char* json)
+unsigned short CJsonConverter::putBuf(char* json)
 {
     if ((unsigned)strlen(json) > (unsigned)(out_buf_size - out_len))
         return 0;
@@ -145,7 +145,7 @@ unsigned short CJsonParser::putBuf(char* json)
     return i;
 }
 
-unsigned short CJsonParser::addInt(char* buf, unsigned short buf_len, char* name, int val)
+unsigned short CJsonConverter::addInt(char* buf, unsigned short buf_len, char* name, int val)
 {
     unsigned short i = 0;
     i += json_emit_quoted_str	(buf + i, buf_len - i, name);
@@ -154,7 +154,7 @@ unsigned short CJsonParser::addInt(char* buf, unsigned short buf_len, char* name
     return i;
 }
 
-unsigned short CJsonParser::addStr(char* buf, unsigned short buf_len, char* name, char* val)
+unsigned short CJsonConverter::addStr(char* buf, unsigned short buf_len, char* name, char* val)
 {
     unsigned short i = 0;
     i += json_emit_quoted_str	(buf + i, buf_len - i, name);

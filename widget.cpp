@@ -5,12 +5,14 @@ Widget::Widget(QWidget *parent): QWidget(parent),
                                  ui(new Ui::Widget)
 {
     ui->setupUi(this);
+    converter = new CJsonConverter();
 
     connect(ui->btnTest, SIGNAL(clicked()), SLOT(test()));
 }
 
 Widget::~Widget()
 {
+    delete converter;
     delete ui;
 }
 
@@ -53,9 +55,8 @@ void Widget::test(void)
     for (int i = 0; i < 5; i++)
         test_data_5.p2.push_back(test_data_1);
 
-    parser = new CJsonParser();
     json[0] = '[';
-    parser->setBuf(&json[1], buf_size - 3);
+    converter->setBuf(&json[1], buf_size - 3);
 
     unsigned char i = 0;
     unsigned char send_buf = 0;
@@ -67,19 +68,19 @@ void Widget::test(void)
         switch(i++)
         {
             case 0:
-                len = parser->packStruct1(&test_data_1);
+                len = converter->packStruct(&test_data_1);
             break;
             case 1:
-                len = parser->packStruct2(&test_data_2);
+                len = converter->packStruct(&test_data_2);
             break;
             case 2:
-                len = parser->packStruct3(&test_data_3);
+                len = converter->packStruct(&test_data_3);
             break;
             case 3:
-                len = parser->packStruct4(&test_data_4);
+                len = converter->packStruct(&test_data_4);
             break;
             case 4:
-                len = parser->packStruct5(&test_data_5);
+                len = converter->packStruct(&test_data_5);
             break;
         }
         if (!len)
@@ -94,7 +95,7 @@ void Widget::test(void)
                                                                         .arg(json));
         // Init buf and parser
             memset(json, 0, buf_size);
-            parser->setBuf(json, buf_size - 2);
+            converter->setBuf(json, buf_size - 2);
         }
         else
         {
@@ -114,6 +115,5 @@ void Widget::test(void)
     if ((i < 5) &&  send_buf)
         ui->textEdit->appendPlainText("Недостаточный размер буфера - " + ui->editBufSize->text() + " байт");
 
-    delete parser;
     delete [] json;
 }

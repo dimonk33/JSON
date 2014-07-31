@@ -1,26 +1,31 @@
-#ifndef CJSONPARSER_H
-#define CJSONPARSER_H
+#ifndef CJSONCONVERTER_H
+#define CJSONCONVERTER_H
 
 #include "datatypes.h"
 
-class CJsonParser
+class CJsonConverter
 {
 public:
-                    CJsonParser     (void);
-                    ~CJsonParser    ();
+                    CJsonConverter     (void);
+                    ~CJsonConverter    ();
 
     void            setBuf          (char*              buf,
                                      unsigned short     buf_size);
-    unsigned short  packStruct1     (TTEST_STRUCT_1*    data);
-    unsigned short  packStruct1     (char*              buf,
+    unsigned short  packStruct      (TTEST_STRUCT_1*    data);
+    unsigned short  packStruct      (char*              buf,
                                      unsigned short     buf_size,
                                      TTEST_STRUCT_1*    data);
-    unsigned short  packStruct2     (TTEST_STRUCT_2*    data);
-    unsigned short  packStruct3     (TTEST_STRUCT_3*    data);
-    unsigned short  packStruct4     (TTEST_STRUCT_4*    data);
-    unsigned short  packStruct5     (TTEST_STRUCT_5*    data);
+    unsigned short  packStruct      (TTEST_STRUCT_2*    data);
+    unsigned short  packStruct      (TTEST_STRUCT_3*    data);
+    unsigned short  packStruct      (TTEST_STRUCT_4*    data);
+    unsigned short  packStruct      (TTEST_STRUCT_5*    data);
 
 private:
+    enum
+    {
+
+    };
+
     char*           out_buf;
     unsigned short  out_len;
     unsigned short  out_buf_size;
@@ -37,4 +42,4 @@ private:
 
 };
 
-#endif // CJSONPARCER_H
+#endif // CJSONCONVERTER_H
