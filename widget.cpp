@@ -59,7 +59,6 @@ void Widget::test(void)
     converter->setBuf(&json[1], buf_size - 3);
 
     unsigned char i = 0;
-    unsigned char send_buf = 0;
     unsigned char cnt_pack = 0;
 // Pack struct to json
     while (i < 5)
@@ -87,9 +86,6 @@ void Widget::test(void)
         {
         // Back to previous struct
             i--;
-        // Check if json struct exceed buf size
-            if (send_buf++)
-                break;
         // Send buf
             ui->textEdit->appendPlainText(QString("%1 пакет:\r\n%2\r\n").arg(++cnt_pack)
                                                                         .arg(json));
@@ -99,21 +95,15 @@ void Widget::test(void)
         }
         else
         {
-        // Reset sending flag
-            send_buf = 0;
         // Add json struct divider
             sprintf(json, "%s,", json);
         }
     }
 // Add ending symbol
-    if (strlen(json) && !send_buf)
+    if (strlen(json))
         json[strlen(json) - 1] = '\0';
     sprintf(json, "%s]", json);
     ui->textEdit->appendPlainText(QString("%1 пакет:\r\n%2\r\n").arg(++cnt_pack)
                                                                 .arg(json));
-// Check send error
-    if ((i < 5) &&  send_buf)
-        ui->textEdit->appendPlainText("Недостаточный размер буфера - " + ui->editBufSize->text() + " байт");
-
     delete [] json;
 }
