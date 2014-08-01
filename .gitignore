@@ -10,3 +10,9 @@ release/moc_widget.cpp
 release/moc_widget.o
 release/widget.o
 ui_widget.h
+debug/cjsonpacker.o
+debug/frozen.o
+debug/main.o
+debug/moc_widget.cpp
+debug/moc_widget.o
+debug/widget.o

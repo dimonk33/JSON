@@ -14,14 +14,14 @@ public:
 
     void            setBuf          (char*              buf,
                                      unsigned short     buf_size);
-    unsigned short  packStruct      (TTEST_STRUCT_1*    data);
+    bool            packStruct      (TTEST_STRUCT_1*    data);
     unsigned short  packStruct      (char*              buf,
                                      unsigned short     buf_size,
                                      TTEST_STRUCT_1*    data);
-    unsigned short  packStruct      (TTEST_STRUCT_2*    data);
-    unsigned short  packStruct      (TTEST_STRUCT_3*    data);
-    unsigned short  packStruct      (TTEST_STRUCT_4*    data);
-    unsigned short  packStruct      (TTEST_STRUCT_5*    data);
+    bool            packStruct      (TTEST_STRUCT_2*    data);
+    bool            packStruct      (TTEST_STRUCT_3*    data);
+    bool            packStruct      (TTEST_STRUCT_4*    data);
+    bool            packStruct      (TTEST_STRUCT_5*    data);
 
 private:
     typedef enum _TYPE_CONV
@@ -49,7 +49,7 @@ private:
                                      unsigned short     buf_len,
                                      char*              name,
                                      char*              val);
-    unsigned short  putBuf          (char*              json);
+    bool            putBuf          (void);
 
 };
 

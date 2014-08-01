@@ -26,30 +26,33 @@ void CJsonPacker::setBuf(char* buf, unsigned short buf_size)
     out_buf_size = buf_size;
 }
 
-unsigned short CJsonPacker::packStruct(TTEST_STRUCT_1* data)
+bool CJsonPacker::packStruct(TTEST_STRUCT_1* data)
 {
     if (!out_buf)
-        return 0;
+        return false;
 
     if (cur_type != STRUCT1)
     {
         unsigned short  i = 0;
         char            jstr[64];
 
-        i += json_emit_raw_str	(&jstr[i], sizeof(jstr) - i, "{");
-        i += addInt             (&jstr[i], sizeof(jstr) - i, "struct1_p1", data->p1);
-        i += json_emit_raw_str	(&jstr[i], sizeof(jstr) - i, ",");
-        i += addInt             (&jstr[i], sizeof(jstr) - i, "struct1_p2", data->p2);
-        i += json_emit_raw_str	(&jstr[i], sizeof(jstr) - i, "}");
-
-        cur_json = string(jstr);
         cur_idx = 0;
+        cur_json.clear();
         cur_type = STRUCT1;
+
+        i += json_emit_raw_str	(jstr, sizeof(jstr), "{");
+        cur_json.append(jstr);
+        i += addInt             (jstr, sizeof(jstr), "struct1_p1", data->p1);
+        cur_json.append(jstr);
+        i += json_emit_raw_str	(jstr, sizeof(jstr), ",");
+        cur_json.append(jstr);
+        i += addInt             (jstr, sizeof(jstr), "struct1_p2", data->p2);
+        cur_json.append(jstr);
+        i += json_emit_raw_str	(jstr, sizeof(jstr), "},");
+        cur_json.append(jstr);
     }
 
-    cur_idx += putBuf((char*)cur_json.c_str() + cur_idx);
-
-    return (cur_idx == cur_json.length());
+    return putBuf();
 }
 
 unsigned short CJsonPacker::packStruct(char* buf, unsigned short buf_size, TTEST_STRUCT_1* data)
@@ -63,139 +66,163 @@ unsigned short CJsonPacker::packStruct(char* buf, unsigned short buf_size, TTEST
     i += addInt             (&buf[i], buf_size - i, "struct1_p1", data->p1);
     i += json_emit_raw_str	(&buf[i], buf_size - i, ",");
     i += addInt             (&buf[i], buf_size - i, "struct1_p2", data->p2);
-    i += json_emit_raw_str	(&buf[i], buf_size - i, "}");
+    i += json_emit_raw_str	(&buf[i], buf_size - i, "},");
 
     return i;
 }
 
-unsigned short CJsonPacker::packStruct(TTEST_STRUCT_2* data)
+bool CJsonPacker::packStruct(TTEST_STRUCT_2* data)
 {
     if (!out_buf)
-        return 0;
+        return false;
 
     if (cur_type != STRUCT2)
     {
         unsigned short  i = 0;
-        char            jstr[255];
+        char            jstr[64];
 
-        i += json_emit_raw_str	(&jstr[i], sizeof(jstr) - i, "{");
-        i += addInt             (&jstr[i], sizeof(jstr) - i, "struct2_p1", data->p1);
-        i += json_emit_raw_str	(&jstr[i], sizeof(jstr) - i, ",");
-        i += addStr             (&jstr[i], sizeof(jstr) - i, "struct2_p2", data->p2);
-        i += json_emit_raw_str	(&jstr[i], sizeof(jstr) - i, ",");
-        i += addInt             (&jstr[i], sizeof(jstr) - i, "struct2_p3", data->p3);
-        i += json_emit_raw_str	(&jstr[i], sizeof(jstr) - i, ",");
-        i += addInt             (&jstr[i], sizeof(jstr) - i, "struct2_p4", data->p4);
-        i += json_emit_raw_str	(&jstr[i], sizeof(jstr) - i, "}");
-
-        cur_json = string(jstr);
         cur_idx = 0;
+        cur_json.clear();
         cur_type = STRUCT2;
+
+        i += json_emit_raw_str	(jstr, sizeof(jstr), "{");
+        cur_json.append(jstr);
+        i += addInt             (jstr, sizeof(jstr), "struct2_p1", data->p1);
+        cur_json.append(jstr);
+        i += json_emit_raw_str	(jstr, sizeof(jstr), ",");
+        cur_json.append(jstr);
+        i += addStr             (jstr, sizeof(jstr), "struct2_p2", data->p2);
+        cur_json.append(jstr);
+        i += json_emit_raw_str	(jstr, sizeof(jstr), ",");
+        cur_json.append(jstr);
+        i += addInt             (jstr, sizeof(jstr), "struct2_p3", data->p3);
+        cur_json.append(jstr);
+        i += json_emit_raw_str	(jstr, sizeof(jstr), ",");
+        cur_json.append(jstr);
+        i += addInt             (jstr, sizeof(jstr), "struct2_p4", data->p4);
+        cur_json.append(jstr);
+        i += json_emit_raw_str	(jstr, sizeof(jstr), "},");
+        cur_json.append(jstr);
     }
 
-    cur_idx += putBuf((char*)cur_json.c_str() + cur_idx);
-
-    return (cur_idx == cur_json.length());
+    return putBuf();
 }
 
-unsigned short CJsonPacker::packStruct(TTEST_STRUCT_3* data)
+bool CJsonPacker::packStruct(TTEST_STRUCT_3* data)
 {
     if (!out_buf)
-        return 0;
+        return false;
 
     if (cur_type != STRUCT3)
     {
         unsigned short  i = 0;
-        char            jstr[255];
+        char            jstr[64];
 
-        i += json_emit_raw_str	(&jstr[i], sizeof(jstr) - i, "{");
-        i += addStr             (&jstr[i], sizeof(jstr) - i, "struct3_p1", data->p1);
-        i += json_emit_raw_str	(&jstr[i], sizeof(jstr) - i, ",");
-        i += addStr             (&jstr[i], sizeof(jstr) - i, "struct3_p2", data->p2);
-        i += json_emit_raw_str	(&jstr[i], sizeof(jstr) - i, "}");
-
-        cur_json = string(jstr);
         cur_idx = 0;
+        cur_json.clear();
         cur_type = STRUCT3;
+
+        i += json_emit_raw_str	(jstr, sizeof(jstr), "{");
+        cur_json.append(jstr);
+        i += addStr             (jstr, sizeof(jstr), "struct3_p1", data->p1);
+        cur_json.append(jstr);
+        i += json_emit_raw_str	(jstr, sizeof(jstr), ",");
+        cur_json.append(jstr);
+        i += addStr             (jstr, sizeof(jstr), "struct3_p2", data->p2);
+        cur_json.append(jstr);
+        i += json_emit_raw_str	(jstr, sizeof(jstr), "},");
+        cur_json.append(jstr);
     }
 
-    cur_idx += putBuf((char*)cur_json.c_str() + cur_idx);
-
-    return (cur_idx == cur_json.length());
+    return putBuf();
 }
 
-unsigned short CJsonPacker::packStruct(TTEST_STRUCT_4* data)
+bool CJsonPacker::packStruct(TTEST_STRUCT_4* data)
 {
     if (!out_buf)
-        return 0;
+        return false;
 
     if (cur_type != STRUCT4)
     {
         unsigned short  i = 0;
         char            jstr[64];
 
-        i += json_emit_raw_str	(&jstr[i], sizeof(jstr) - i, "{");
-        i += addInt             (&jstr[i], sizeof(jstr) - i, "struct4_p1", data->p1);
-        i += json_emit_raw_str	(&jstr[i], sizeof(jstr) - i, ",");
-        i += addInt             (&jstr[i], sizeof(jstr) - i, "struct4_p2", data->p2);
-        i += json_emit_raw_str	(&jstr[i], sizeof(jstr) - i, "}");
-
-        cur_json = string(jstr);
         cur_idx = 0;
+        cur_json.clear();
         cur_type = STRUCT4;
+
+        i += json_emit_raw_str	(jstr, sizeof(jstr), "{");
+        cur_json.append(jstr);
+        i += addInt             (jstr, sizeof(jstr), "struct4_p1", data->p1);
+        cur_json.append(jstr);
+        i += json_emit_raw_str	(jstr, sizeof(jstr), ",");
+        cur_json.append(jstr);
+        i += addInt             (jstr, sizeof(jstr), "struct4_p2", data->p2);
+        cur_json.append(jstr);
+        i += json_emit_raw_str	(jstr, sizeof(jstr), "},");
+        cur_json.append(jstr);
     }
 
-    cur_idx += putBuf((char*)cur_json.c_str() + cur_idx);
-
-    return (cur_idx == cur_json.length());
+    return putBuf();
 }
 
-unsigned short CJsonPacker::packStruct(TTEST_STRUCT_5* data)
+bool CJsonPacker::packStruct(TTEST_STRUCT_5* data)
 {
     if (!out_buf)
-        return 0;
+        return false;
 
     if (cur_type != STRUCT5)
     {
         unsigned short  i = 0;
-        char            jstr[512];
+        char            jstr[128];
 
-        i += json_emit_raw_str      (&jstr[i], sizeof(jstr) - i, "{");
-        i += addInt                 (&jstr[i], sizeof(jstr) - i, "struct5_p1", data->p1);
-        i += json_emit_raw_str      (&jstr[i], sizeof(jstr) - i, ",");
-        i += json_emit_quoted_str	(&jstr[i], sizeof(jstr) - i, "struct5_p2");
-        i += json_emit_raw_str		(&jstr[i], sizeof(jstr) - i, ":");
-        i += json_emit_raw_str      (&jstr[i], sizeof(jstr) - i, "[");
-        for (int j = 0; j < data->p2.size(); j++)
-        {
-            i += packStruct(&jstr[i], sizeof(jstr) - i, &data->p2.at(j));
-            i += json_emit_raw_str	(&jstr[i], sizeof(jstr) - i, ",");
-        }
-        if (data->p2.size())
-            i--;
-        i += json_emit_raw_str      (&jstr[i], sizeof(jstr) - i, "]");
-        i += json_emit_raw_str      (&jstr[i], sizeof(jstr) - i, "}");
-
-        cur_json = string(jstr);
         cur_idx = 0;
+        cur_json.clear();
         cur_type = STRUCT5;
+
+        i += json_emit_raw_str      (jstr, sizeof(jstr), "{");
+        cur_json.append(jstr);
+        i += addInt                 (jstr, sizeof(jstr), "struct5_p1", data->p1);
+        cur_json.append(jstr);
+        i += json_emit_raw_str      (jstr, sizeof(jstr), ",");
+        cur_json.append(jstr);
+        i += json_emit_quoted_str	(jstr, sizeof(jstr), "struct5_p2");
+        cur_json.append(jstr);
+        i += json_emit_raw_str		(jstr, sizeof(jstr), ":");
+        cur_json.append(jstr);
+        i += json_emit_raw_str      (jstr, sizeof(jstr), "[");
+        cur_json.append(jstr);
+        if (data->p2.size())
+        {
+            for (int j = 0; j < data->p2.size(); j++)
+            {
+                i += packStruct(jstr, sizeof(jstr), &data->p2.at(j));
+                cur_json.append(jstr);
+            }
+            cur_json.resize(cur_json.size() - 1);
+            i--;
+        }
+        i += json_emit_raw_str      (jstr, sizeof(jstr), "]");
+        cur_json.append(jstr);
+        i += json_emit_raw_str      (jstr, sizeof(jstr), "},");
+        cur_json.append(jstr);
     }
 
-    cur_idx += putBuf((char*)cur_json.c_str() + cur_idx);
-
-    return (cur_idx == cur_json.length());
+    return putBuf();
 }
 
-unsigned short CJsonPacker::putBuf(char* json)
+bool CJsonPacker::putBuf(void)
 {
-    int i = json_emit_raw_str(out_buf + out_len, out_buf_size - out_len, json);
+    int i = json_emit_raw_str(out_buf + out_len, out_buf_size - out_len, (char*)cur_json.c_str() + cur_idx);
     if (i < 0)
     {
         *(out_buf + out_buf_size - 1) = '\0';
         i = out_buf_size - out_len - 1;
     }
+    cur_idx += i;
     out_len += i;
-    return (unsigned short)i;
+
+    return (cur_idx != cur_json.length());
 }
 
 unsigned short CJsonPacker::addInt(char* buf, unsigned short buf_len, char* name, int val)

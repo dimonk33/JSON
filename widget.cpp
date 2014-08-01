@@ -63,40 +63,36 @@ void Widget::test(void)
 // Pack struct to json
     while (i < 5)
     {
-        unsigned short  len = 0;
+        bool  buf_full = false;
         switch(i++)
         {
             case 0:
-                len = converter->packStruct(&test_data_1);
+                buf_full = converter->packStruct(&test_data_1);
             break;
             case 1:
-                len = converter->packStruct(&test_data_2);
+                buf_full = converter->packStruct(&test_data_2);
             break;
             case 2:
-                len = converter->packStruct(&test_data_3);
+                buf_full = converter->packStruct(&test_data_3);
             break;
             case 3:
-                len = converter->packStruct(&test_data_4);
+                buf_full = converter->packStruct(&test_data_4);
             break;
             case 4:
-                len = converter->packStruct(&test_data_5);
+                buf_full = converter->packStruct(&test_data_5);
             break;
         }
-        if (!len)
+    // Check buf full
+        if (buf_full)
         {
-        // Back to previous struct
-            i--;
         // Send buf
             ui->textEdit->appendPlainText(QString("%1 пакет:\r\n%2\r\n").arg(++cnt_pack)
                                                                         .arg(json));
+        // Back to previous struct
+            i--;
         // Init buf and parser
             memset(json, 0, buf_size);
             converter->setBuf(json, buf_size - 2);
-        }
-        else
-        {
-        // Add json struct divider
-            sprintf(json, "%s,", json);
         }
     }
 // Add ending symbol
