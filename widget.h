@@ -3,7 +3,7 @@
 
 #include <QWidget>
 
-#include "cjsonconverter.h"
+#include "cjsonpacker.h"
 
 namespace Ui {
     class Widget;
@@ -19,7 +19,7 @@ public:
 
 private:
     Ui::Widget*     ui;
-    CJsonConverter* converter;
+    CJsonPacker* converter;
 
 private slots:
     void    test    (void);

@@ -5,7 +5,7 @@ Widget::Widget(QWidget *parent): QWidget(parent),
                                  ui(new Ui::Widget)
 {
     ui->setupUi(this);
-    converter = new CJsonConverter();
+    converter = new CJsonPacker();
 
     connect(ui->btnTest, SIGNAL(clicked()), SLOT(test()));
 }

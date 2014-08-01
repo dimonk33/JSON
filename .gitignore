@@ -1,0 +1,12 @@
+JSON.pro.user
+Makefile
+Makefile.Debug
+Makefile.Release
+release/cjsonconverter.o
+release/cjsonpacker.o
+release/frozen.o
+release/main.o
+release/moc_widget.cpp
+release/moc_widget.o
+release/widget.o
+ui_widget.h

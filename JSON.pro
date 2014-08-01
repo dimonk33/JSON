@@ -15,11 +15,11 @@ TEMPLATE = app
 SOURCES += main.cpp\
         widget.cpp \
     frozen.c \
-    cjsonconverter.cpp
+    cjsonpacker.cpp
 
 HEADERS  += widget.h \
     frozen.h \
     datatypes.h \
-    cjsonconverter.h
+    cjsonpacker.h
 
 FORMS    += widget.ui
