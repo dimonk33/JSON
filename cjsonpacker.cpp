@@ -219,6 +219,8 @@ bool CJsonPacker::putBuf(void)
         *(out_buf + out_buf_size - 1) = '\0';
         i = out_buf_size - out_len - 1;
     }
+    else
+        cur_type = NONE;
     cur_idx += i;
     out_len += i;
 
